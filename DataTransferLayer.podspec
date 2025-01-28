@@ -21,16 +21,16 @@ Pod::Spec.new do |s|
 TODO: Add long description of the pod here.
                        DESC
 
-  s.homepage         = 'https://github.com/Gopi Krishna/DataTransferLayer'
+  s.homepage         = 'https://github.com/gopi453/DataTransferLayer'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Gopi Krishna' => 'gopi19453@gmail.com' }
-  s.source           = { :git => 'https://github.com/Gopi Krishna/DataTransferLayer.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/gopi453/DataTransferLayer.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '12.0'
 
-  s.source_files = 'Classes/**/*.swift'
+  s.source_files = 'DataTransferLayer/Classes/**/*.swift'
   
   # s.resource_bundles = {
   #   'DataTransferLayer' => ['DataTransferLayer/Assets/*.png']
