@@ -1,0 +1,22 @@
+{
+  "name": "DataTransferLayer",
+  "version": "0.1.0",
+  "summary": "A short description of DataTransferLayer.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/Gopi Krishna/DataTransferLayer",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Gopi Krishna": "gopi19453@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/Gopi Krishna/DataTransferLayer.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "10.0"
+  },
+  "source_files": "DataTransferLayer/Classes/**/*"
+}

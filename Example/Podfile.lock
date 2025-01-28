@@ -1,0 +1,16 @@
+PODS:
+  - DataTransferLayer (0.1.0)
+
+DEPENDENCIES:
+  - DataTransferLayer (from `../`)
+
+EXTERNAL SOURCES:
+  DataTransferLayer:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  DataTransferLayer: 2766d9db4420cea2f49fd5fa09d0dda99eb018b4
+
+PODFILE CHECKSUM: 098abe6558ad554dbbb1faf44611a858447736f2
+
+COCOAPODS: 1.16.2
