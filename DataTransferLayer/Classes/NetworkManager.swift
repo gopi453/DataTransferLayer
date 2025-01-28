@@ -12,17 +12,17 @@ public final class NetworkManager {
     private static let sharedInstance = NetworkManager()
     private let session: URLSession
     
-    class func shared() -> NetworkManager {
+    public class func shared() -> NetworkManager {
         return sharedInstance
     }
     
-    init(session: URLSession = .shared) {
+    public init(session: URLSession = .shared) {
         self.session = session
     }
     
     @available(iOS 15.0, *)
     @MainActor
-    func makeAsyncRequest(from request: RequestBuilder) async throws -> Any {
+    public func makeAsyncRequest(from request: RequestBuilder) async throws -> Any {
         let urlRequest = try createURLRequest(from: request)
         let (data, response) = try await session.data(for: urlRequest)
         
@@ -31,7 +31,7 @@ public final class NetworkManager {
     }
     
     @available(iOS 13.0, *)
-    func makePublisherRequest(from request: RequestBuilder) throws -> AnyPublisher<Any, NetworkError> {
+    public func makePublisherRequest(from request: RequestBuilder) throws -> AnyPublisher<Any, NetworkError> {
         do {
             let urlRequest = try createURLRequest(from: request)
             return self.session.dataTaskPublisher(for: urlRequest)
@@ -48,9 +48,8 @@ public final class NetworkManager {
             return Fail(error: NetworkError.request).eraseToAnyPublisher()
         }
     }
-    
 
-    func makeRequest(from request: RequestBuilder,_ completion: @escaping (Result<Any, NetworkError>) -> Void) {
+    public func makeRequest(from request: RequestBuilder,_ completion: @escaping (Result<Any, NetworkError>) -> Void) {
         do {
             let urlRequest = try createURLRequest(from: request)
             self.session.dataTask(with: urlRequest) { data, response, error in

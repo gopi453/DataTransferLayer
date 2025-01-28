@@ -26,7 +26,7 @@ public protocol RequestBuilder {
     
 }
 
-extension RequestBuilder {
+public extension RequestBuilder {
     var path: String { "" }
     var baseURL: String? { nil }
     var method: HTTPMethod { .get }
