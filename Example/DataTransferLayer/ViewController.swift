@@ -8,26 +8,12 @@
 
 import UIKit
 import DataTransferLayer
-protocol ViewModelProtocol: AnyObject {
-    func requestData<T>(for request: RequestBuilder,_ completion: @escaping (((Result<T, NetworkError>) -> Void)))
-}
 
-class BaseViewModel: ViewModelProtocol {
-    func requestData<T>(for request: any DataTransferLayer.RequestBuilder, _ completion: @escaping (((Result<T, NetworkError>) -> Void))) {
-        self.networkManager.makeRequest(from: request, completion)
-    }
+class HomeViewController: UIViewController {
 
-    private let networkManager: NetworkManager
-    init(networkManager: NetworkManager = .shared()) {
-        self.networkManager = networkManager
-    }
-}
+    private let viewModel: HomeViewModel
 
-class BaseViewController: UIViewController {
-
-    private(set) var viewModel: ViewModelProtocol
-
-    init(viewModel: ViewModelProtocol) {
+    init(viewModel: HomeViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -38,20 +24,6 @@ class BaseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-}
-
-class HomeViewController: BaseViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
         self.view.backgroundColor = .orange
         self.title = "Home"
         // Do any additional setup after loading the view, typically from a nib.
@@ -59,9 +31,7 @@ class HomeViewController: BaseViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let homeViewModel = viewModel as? HomeViewModel {
-            homeViewModel.getHomeData()
-        }
+        viewModel.getHomeData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -71,30 +41,33 @@ class HomeViewController: BaseViewController {
 
 }
 
-struct HomeRequest: RequestBuilder {
+struct HomeRequest: DTLRequestBuilder {
 
     var baseURL: String? {
     "https://jsonplaceholder.typicode.com"
     }
 
     var path: String {
-        "/todos"
+        "todos"
     }
 
 }
 
 
-final class HomeViewModel: BaseViewModel {
-    private let request: RequestBuilder = HomeRequest()
+final class HomeViewModel {
+    private let request: DTLRequestBuilder = HomeRequest()
+    private let client: DTLClient = .shared()
 
     func getHomeData() {
-        self.requestData(for: request) { (result: Result<[String: Any], NetworkError>) in
-            do {
-                let res = try result.get()
-                print(res)
-            }catch {
-                print(error)
-            }
+        client.makeRequest(from: request, handleResponse)
+    }
+
+    private func handleResponse(result: Result<DTLResponse<[String: Any]>, DTLError>) {
+        do {
+            let res = try result.get()
+            print(res.getValue())
+        } catch {
+            print(error.localizedDescription)
         }
     }
 }

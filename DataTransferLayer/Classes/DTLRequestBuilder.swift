@@ -1,8 +1,8 @@
 //
 //  RequestBuilder.swift
-//  NetForge
+//  DataTransferLayer
 //
-//  Created by GPS on 28/01/25.
+//  Created by Gopi Krishna on 28/01/25.
 //
 
 import Foundation
@@ -14,7 +14,7 @@ public enum HTTPMethod:String, CustomStringConvertible {
     }
 }
 
-public protocol RequestBuilder {
+public protocol DTLRequestBuilder {
     var baseURL: String? { get }
     var path: String { get }
     var method: HTTPMethod { get }
@@ -24,7 +24,7 @@ public protocol RequestBuilder {
     var headers: [String: String] { get }
 }
 
-public extension RequestBuilder {
+public extension DTLRequestBuilder {
     var path: String { "" }
     var baseURL: String? { nil }
     var method: HTTPMethod { .get }
@@ -35,11 +35,11 @@ public extension RequestBuilder {
     }
     var queryItems: [URLQueryItem]? { nil }
     func getURL() throws -> URL {
-        guard let baseURL else { throw NetworkError.request }
-        var components = URLComponents(string: baseURL + path)
+        guard let baseURL else { throw DTLError.request }
+        var components = URLComponents(string: baseURL)
+        components?.path = "/\(path)"
         components?.queryItems = queryItems
-        guard let url = components?.url else { throw NetworkError.request }
+        guard let url = components?.url else { throw DTLError.request }
         return url
     }
-
 }
