@@ -7,20 +7,20 @@
 
 import Foundation
 
-struct ResponseParser {
+struct ResponseParser<Value> {
     private let data: Data?
     private let response: URLResponse?
     private let error: Error?
-    private let decodeType: Any.Type
-    
-    init(data: Data?, response: URLResponse?, error: Error? = nil, decodeType: Any.Type) {
+    private let decoder: JSONDecoder
+
+    init(data: Data?, response: URLResponse?, error: Error? = nil, decoder: JSONDecoder = .init()) {
         self.data = data
         self.response = response
         self.error = error
-        self.decodeType = decodeType
+        self.decoder = decoder
     }
    
-    func parse() throws -> Any {
+    func parse() throws -> Value {
         if let error = error {
             throw NetworkError.response(error.localizedDescription)
         }
@@ -33,23 +33,21 @@ struct ResponseParser {
         return try decode(from: data)
     }
     
-    private func decode(from data: Data) throws -> Any {
+    private func decode(from data: Data) throws -> Value {
         // Attempt to decode the data into the provided type
         do {
-            if let decodeType = decodeType as? Decodable.Type {
-                let decoder = JSONDecoder()
-                return try decoder.decode(decodeType, from: data)
+            if let decodeType = Value.self as? Decodable.Type,
+               let value = (try? decoder.decode(decodeType, from: data)) as? Value {
+                return value
             } else {
-                if let dictionary = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
-                    return dictionary
-                } else if let array = try JSONSerialization.jsonObject(with: data, options: []) as? [Any] {
-                    return array
+                if let object = try JSONSerialization.jsonObject(with: data, options: []) as? Value {
+                    return object
                 } else {
                     throw NetworkError.response("Parsing failed with error")
                 }
             }
         } catch {
-            return NetworkError.response("Parsing failed with error:\n\(error.localizedDescription)")
+            throw NetworkError.response("Parsing failed with error:\n\(error.localizedDescription)")
         }
     }
     

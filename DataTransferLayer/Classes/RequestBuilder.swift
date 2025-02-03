@@ -22,8 +22,6 @@ public protocol RequestBuilder {
     var body: Data? { get }
     var queryItems: [URLQueryItem]? { get }
     var headers: [String: String] { get }
-    var decodeType: Any.Type { get }
-    
 }
 
 public extension RequestBuilder {

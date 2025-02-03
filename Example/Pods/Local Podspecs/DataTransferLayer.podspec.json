@@ -1,9 +1,9 @@
 {
   "name": "DataTransferLayer",
-  "version": "0.1.0",
-  "summary": "A short description of DataTransferLayer.",
+  "version": "0.1.1",
+  "summary": "Networking layer written in swift.",
   "description": "TODO: Add long description of the pod here.",
-  "homepage": "https://github.com/Gopi Krishna/DataTransferLayer",
+  "homepage": "https://github.com/gopi453/DataTransferLayer",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
@@ -12,11 +12,11 @@
     "Gopi Krishna": "gopi19453@gmail.com"
   },
   "source": {
-    "git": "https://github.com/Gopi Krishna/DataTransferLayer.git",
-    "tag": "0.1.0"
+    "git": "https://github.com/gopi453/DataTransferLayer.git",
+    "tag": "0.1.1"
   },
   "platforms": {
-    "ios": "10.0"
+    "ios": "12.0"
   },
-  "source_files": "DataTransferLayer/Classes/**/*"
+  "source_files": "DataTransferLayer/Classes/**/*.swift"
 }

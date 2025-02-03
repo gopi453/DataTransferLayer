@@ -22,22 +22,20 @@ public final class NetworkManager {
     
     @available(iOS 15.0, *)
     @MainActor
-    public func makeAsyncRequest(from request: RequestBuilder) async throws -> Any {
+    public func makeAsyncRequest<T>(from request: RequestBuilder) async throws -> T {
         let urlRequest = try createURLRequest(from: request)
         let (data, response) = try await session.data(for: urlRequest)
-        
-        let responseParser = ResponseParser(data: data, response: response, decodeType: request.decodeType)
-        return try responseParser.parse()
+        return try self.parseResponse(data: data, response: response)
     }
     
     @available(iOS 13.0, *)
-    public func makePublisherRequest(from request: RequestBuilder) throws -> AnyPublisher<Any, NetworkError> {
+    public func makePublisherRequest<T>(from request: RequestBuilder) throws -> AnyPublisher<T, NetworkError> {
         do {
             let urlRequest = try createURLRequest(from: request)
             return self.session.dataTaskPublisher(for: urlRequest)
-                .tryMap({ (data: Data, response: URLResponse) -> Any in
-                    let responseParser = ResponseParser(data: data, response: response, decodeType: request.decodeType)
-                    return try responseParser.parse()
+                .tryMap({ (data: Data, response: URLResponse) -> T in
+                    let response:T = try self.parseResponse(data: data, response: response)
+                    return response
                 })
                 .mapError { error in
                     (error as? NetworkError) ?? .unknown
@@ -49,17 +47,16 @@ public final class NetworkManager {
         }
     }
 
-    public func makeRequest(from request: RequestBuilder,_ completion: @escaping (Result<Any, NetworkError>) -> Void) {
+    public func makeRequest<T>(from request: RequestBuilder,_ completion: @escaping (Result<T, NetworkError>) -> Void) {
         do {
             let urlRequest = try createURLRequest(from: request)
-            self.session.dataTask(with: urlRequest) { data, response, error in
-                let responseParser = ResponseParser(data: data, response: response, error: error, decodeType: request.decodeType)
+            self.session.dataTask(with: urlRequest) { [weak self] data, response, error in
+                guard let self else { return }
                 do {
-                    let dataObj = try responseParser.parse()
+                    let response:T = try self.parseResponse(data: data, response: response, error: error)
                     DispatchQueue.main.async {
-                        completion(.success(dataObj))
+                        completion(.success(response))
                     }
-                    
                 } catch {
                     DispatchQueue.main.async {
                         completion(.failure(NetworkError.response(error.localizedDescription)))
@@ -84,6 +81,11 @@ private extension NetworkManager {
         print(urlRequest.toCurl())
 #endif
         return urlRequest
+    }
+
+    func parseResponse<T>(data: Data?, response: URLResponse?, error: Error? = nil) throws -> T {
+        let responseParser = ResponseParser<T>(data: data, response: response, error: error)
+        return try responseParser.parse()
     }
 }
 
