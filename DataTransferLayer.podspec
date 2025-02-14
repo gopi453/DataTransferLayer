@@ -31,7 +31,10 @@ TODO: Add long description of the pod here.
   s.ios.deployment_target = '12.0'
 
   s.source_files = 'DataTransferLayer/Classes/**/*.swift'
-  
+  s.pod_target_xcconfig = { 'CODE_SIGN_IDENTITY' => 'iPhone Developer' }
+  s.swift_versions = ['4.0']
+
+
   # s.resource_bundles = {
   #   'DataTransferLayer' => ['DataTransferLayer/Assets/*.png']
   # }

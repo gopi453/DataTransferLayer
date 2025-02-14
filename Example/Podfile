@@ -3,7 +3,7 @@ use_frameworks!
 platform :ios, '12.0'
 
 target 'DataTransferLayer_Example' do
-  pod 'DataTransferLayer', :path => '../'
+  pod 'DataTransferLayer'
 
   target 'DataTransferLayer_Tests' do
     inherit! :search_paths
