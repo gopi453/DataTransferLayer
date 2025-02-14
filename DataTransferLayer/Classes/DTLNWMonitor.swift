@@ -1,11 +1,13 @@
 //
-//  DTLNWMonitor.swift
+//  File.swift
 //  DataTransferLayer
 //
-//  Created by K Gopi on 03/02/25.
+//  Created by K Gopi on 14/02/25.
 //
 
+import Foundation
 import Network
+
 protocol DTLReachabilityProtocol {
     func execute() throws
 }
@@ -32,5 +34,3 @@ final class DTLNWMonitor: DTLReachabilityProtocol {
         throw DTLError.network
     }
 }
-
-
