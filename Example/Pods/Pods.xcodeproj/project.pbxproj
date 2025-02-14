@@ -20,6 +20,7 @@
 		E3530462380E6FF8BD11AC091883331B /* URLRequest+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4B45939C906ADEB5253100B7668B0E /* URLRequest+Extension.swift */; };
 		ED4AFD62D06ED8C488AFFBC61CFE32FE /* DataTransferLayer-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 76078B1CD6A263809797DE12B41B7C04 /* DataTransferLayer-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F412E6D856968B287FF5C99B1EFF963D /* DTLClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE915C58FE1657C59DB9C86A1024A5A /* DTLClient.swift */; };
+		F55F3A5F2D50F02300E057A7 /* DTLNWMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55F3A5E2D50F02300E057A7 /* DTLNWMonitor.swift */; };
 		FA94B467C876505C0A6F461BA45637E3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -77,6 +78,7 @@
 		E4DAD046B3E62F1C50740089465F6752 /* DataTransferLayer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = DataTransferLayer.release.xcconfig; sourceTree = "<group>"; };
 		EA6736DDA13598974063A42C5AF83E1F /* DataTransferLayer-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "DataTransferLayer-prefix.pch"; sourceTree = "<group>"; };
 		EA7B683E8814C9E0FC531F6F94DA5AE1 /* Pods-DataTransferLayer_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-DataTransferLayer_Tests-dummy.m"; sourceTree = "<group>"; };
+		F55F3A5E2D50F02300E057A7 /* DTLNWMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTLNWMonitor.swift; sourceTree = "<group>"; };
 		FF3C386C5CF2B66F0E99281A4625BDC2 /* DataTransferLayer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = DataTransferLayer.debug.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -118,6 +120,7 @@
 				BC4B45939C906ADEB5253100B7668B0E /* URLRequest+Extension.swift */,
 				4FE7BBB1711AD0ECBA3A5F291423F018 /* Pod */,
 				7A70D3A9B49A3401425886F5840DD559 /* Support Files */,
+				F55F3A5E2D50F02300E057A7 /* DTLNWMonitor.swift */,
 			);
 			name = DataTransferLayer;
 			path = ../..;
@@ -383,6 +386,7 @@
 				271B6A79EB1062E2379BCD7378AA8380 /* DTLErrorHandlers.swift in Sources */,
 				F412E6D856968B287FF5C99B1EFF963D /* DTLClient.swift in Sources */,
 				97D011F428F903C5EEB74D8554CE7807 /* DTLRequestBuilder.swift in Sources */,
+				F55F3A5F2D50F02300E057A7 /* DTLNWMonitor.swift in Sources */,
 				C128932BF23216671CA92564DEC42D33 /* DTLResponseParser.swift in Sources */,
 				E3530462380E6FF8BD11AC091883331B /* URLRequest+Extension.swift in Sources */,
 			);

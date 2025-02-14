@@ -11,6 +11,7 @@ import Combine
 public final class DTLClient {
     private static let sharedInstance = DTLClient()
     private let session: URLSession
+    private let nwMonitor = DTLNWMonitor()
 
     public class func shared() -> DTLClient {
         return sharedInstance
@@ -23,6 +24,7 @@ public final class DTLClient {
     @available(iOS 15.0, *)
     @MainActor
     public func makeAsyncRequest<T>(from request: DTLRequestBuilder) async throws -> DTLResponse<T> {
+        try nwMonitor.execute()
         let urlRequest = try createURLRequest(from: request)
         let (data, response) = try await session.data(for: urlRequest)
         return try self.parseResponse(data: data, response: response)
@@ -31,6 +33,7 @@ public final class DTLClient {
     @available(iOS 13.0, *)
     public func makePublisherRequest<T>(from request: DTLRequestBuilder) throws -> AnyPublisher<DTLResponse<T>, DTLError> {
         do {
+            try nwMonitor.execute()
             let urlRequest = try createURLRequest(from: request)
             return self.session.dataTaskPublisher(for: urlRequest)
                 .tryMap({ (data: Data, response: URLResponse) -> DTLResponse<T> in
@@ -42,13 +45,20 @@ public final class DTLClient {
                 }
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
-        } catch {
-            return Fail(error: DTLError.request).eraseToAnyPublisher()
+        }
+        catch let dtlError as DTLError {
+            switch dtlError {
+            case .request, .response, .unknown:
+                return Fail(error: DTLError.request).eraseToAnyPublisher()
+            case .network:
+                return Fail(error: DTLError.network).eraseToAnyPublisher()
+            }
         }
     }
 
     public func makeRequest<T>(from request: DTLRequestBuilder,_ completion: @escaping (Result<DTLResponse<T>, DTLError>) -> Void) {
         do {
+            try nwMonitor.execute()
             let urlRequest = try createURLRequest(from: request)
             self.session.dataTask(with: urlRequest) { [weak self] data, response, error in
                 guard let self else { return }
@@ -64,7 +74,11 @@ public final class DTLClient {
                     }
                 }
             }.resume()
-        }  catch {
+        } 
+        catch let error as DTLError {
+            completion(.failure(error))
+        }
+        catch {
             completion(.failure(DTLError.request))
         }
     }
