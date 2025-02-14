@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'DataTransferLayer'
-  s.version          = '0.0.1'
+  s.version          = '1.0.0'
   s.summary          = 'Data Transfer layer for API written in swift.'
 
 # This description is used to generate tags and improve search results.
