@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'DataTransferLayer'
   s.version          = '0.1.5'
-  s.summary          = 'Networking layer written in swift.'
+  s.summary          = 'Data Transfer layer for API written in swift.'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -18,15 +18,16 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+  This is a library that helps you manage data.
+    It allows you to store, retrieve, and process data efficiently.
+    The goal of this library is to simplify data handling tasks in iOS applications.
                        DESC
 
   s.homepage         = 'https://github.com/gopi453/DataTransferLayer'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'Gopi Krishna' => 'gopi19453@gmail.com' }
+  s.author           = { 'Gopi Kothapati' => 'gopi19453@gmail.com' }
   s.source           = { :git => 'https://github.com/gopi453/DataTransferLayer.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '12.0'
 
